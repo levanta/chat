@@ -1,0 +1,75 @@
+/*
+ * Copyright 2009 Facebook
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may
+ * not use this file except in compliance with the License. You may obtain
+ * a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations
+ * under the License.
+ */
+
+body {
+  color: black;
+  background: #F2E6DE;
+}
+
+body,
+input,
+textarea {
+  font-family: "Lucida Grande", Tahoma, Verdana, sans-serif;
+  font-size: 10pt;
+}
+img {
+  border: 0;
+  
+}
+img.photo, img.myphoto {
+  border: 0; border-radius: 50%; margin-bottom: 12px; height: 30px; width: 30px;
+}
+
+a {
+  text-decoration: none;
+  color: #3b5998;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+
+html, body{height: 100%; padding: 0; margin: 0;}
+#body {
+  max-width: 400px;
+  margin: auto; position: relative; height: 100%; 
+}
+
+
+.chat{
+  background: url(bg2.jpg) 50% 50% repeat fixed ; background-size: contain; 
+  border-radius: 0 0 4px 4px; 
+  padding: 8px;
+  overflow: auto; overflow: auto; margin-top: 30px;
+}
+img.myphoto{float: right; margin-left: 8px}
+img.photo{float: left; margin-right: 8px;}
+.txt{overflow: hidden; position: relative; margin-bottom: 12px; border-radius: 6px; padding: 8px; font-size: 12px;}
+img.myphoto + .txt{ margin-left: 45px; background: rgba(224, 238,238,.9)}
+img.photo + .txt{ margin-right: 45px; background: rgba(255,255,255,.9);}
+
+#messageform{
+  padding: 0; }
+#messageform input[type="text"]{
+  width: 290px; height: 29px;
+}
+.nav{
+  position: fixed; top: 0; left: 0; right:0; height: 30px; background: #74476A; z-index: 1;
+  text-align: center; color: #fff;
+}
+.nav a{color:#fff;}
+footer{height: 40px; background: #000; position: fixed; bottom: 0; left: 0; right: 0;}
