@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="{{ static_url("chat.css") }}" type="text/css">
   </head>
   <body>
-  <img src="{{ current_user['picture']['data']['url'] }}" title="{{current_user['name']}}" class="photo">
     <div id="body">
       <div id="inbox">
         {% for message in messages %}

@@ -21,6 +21,14 @@ import tornado.httpserver
 import tornado.ioloop
 import tornado.options
 import tornado.web
+import logging
+import tornado.escape
+import tornado.ioloop
+import tornado.options
+import tornado.web
+import tornado.websocket
+import os.path
+import uuid
 
 from tornado.options import define, options
 
@@ -34,6 +42,7 @@ class Application(tornado.web.Application):
         handlers = [
             (r"/", MainHandler2),
             (r"/test", MainHandler),
+            (r"/chatsocket", ChatSocketHandler),
             (r"/auth/login", AuthLoginHandler),
             (r"/auth/logout", AuthLogoutHandler),
         ]
@@ -52,6 +61,8 @@ class Application(tornado.web.Application):
         tornado.web.Application.__init__(self, handlers, **settings)
 
 
+
+
 class BaseHandler(tornado.web.RequestHandler):
     def get_current_user(self):
         user_json = self.get_secure_cookie("fbdemo_user")
@@ -59,9 +70,6 @@ class BaseHandler(tornado.web.RequestHandler):
         return tornado.escape.json_decode(user_json)
 
 
-class MainHandler2(BaseHandler):
-    def get(self):
-        self.render("stream.html")
 
 class MainHandler(BaseHandler, tornado.auth.FacebookGraphMixin):
     @tornado.web.authenticated
@@ -75,7 +83,12 @@ class MainHandler(BaseHandler, tornado.auth.FacebookGraphMixin):
             # Session may have expired
             self.redirect("/auth/login")
             return
-        self.render("stream2.html", stream=stream)
+        self.render("stream2.html", stream=stream, messages=ChatSocketHandler.cache)
+
+
+class MainHandler2(BaseHandler):
+    def get(self):
+        self.render("stream.html")
 
 
 class AuthLoginHandler(BaseHandler, tornado.auth.FacebookGraphMixin):
@@ -122,6 +135,50 @@ class PostModule3(tornado.web.UIModule):
         return self.render_string("modules/post3.html")
 
 
+class ChatSocketHandler(tornado.websocket.WebSocketHandler):
+    waiters = set()
+    cache = []
+    cache_size = 200
+
+    def get_compression_options(self):
+        # Non-None enables compression with default options.
+        return {}
+
+    def open(self):
+        ChatSocketHandler.waiters.add(self)
+
+    def on_close(self):
+        ChatSocketHandler.waiters.remove(self)
+
+    @classmethod
+    def update_cache(cls, chat):
+        cls.cache.append(chat)
+        if len(cls.cache) > cls.cache_size:
+            cls.cache = cls.cache[-cls.cache_size:]
+
+    @classmethod
+    def send_updates(cls, chat):
+        logging.info("sending message to %d waiters", len(cls.waiters))
+        for waiter in cls.waiters:
+            try:
+                waiter.write_message(chat)
+            except:
+                logging.error("Error sending message", exc_info=True)
+
+    def on_message(self, message):
+        logging.info("got message %r", message)
+        parsed = tornado.escape.json_decode(message)
+        chat = {
+            "id": str(uuid.uuid4()),
+            "body": parsed["body"],
+            }
+        chat["html"] = tornado.escape.to_basestring(
+            self.render_string("message.html", message=chat))
+
+        ChatSocketHandler.update_cache(chat)
+        ChatSocketHandler.send_updates(chat)
+
+
 def main():
     tornado.options.parse_command_line()
     if not (options.facebook_api_key and options.facebook_secret):
@@ -129,6 +186,7 @@ def main():
         return
     http_server = tornado.httpserver.HTTPServer(Application())
     http_server.listen(options.port)
+    app = Application()
     tornado.ioloop.IOLoop.current().start()
 
 
