@@ -70,21 +70,10 @@ class BaseHandler(tornado.web.RequestHandler):
         return tornado.escape.json_decode(user_json)
 
 
-
 class MainHandler(BaseHandler, tornado.auth.FacebookGraphMixin):
     @tornado.web.authenticated
-    @tornado.web.asynchronous
     def get(self):
-        self.facebook_request("/me/feed", self._on_stream,
-                              access_token=self.current_user["access_token"])
-
-    def _on_stream(self, stream):
-        if stream is None:
-            # Session may have expired
-            self.redirect("/auth/login")
-            return
-        self.render("stream2.html", stream=stream, messages=ChatSocketHandler.cache)
-
+        self.render("stream2.html", messages=ChatSocketHandler.cache)
 
 class MainHandler2(BaseHandler):
     def get(self):
