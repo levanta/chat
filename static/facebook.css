@@ -29,10 +29,10 @@ img {
   border: 0;
   
 }
-img.photo, img.myphoto {
+.photo, .myphoto {
   border: 0; border-radius: 50%; margin-bottom: 12px; height: 30px; width: 30px;
 }
-
+.photo img, .myphoto img{ border-radius: 50%;  height: 30px; width: 30px;}
 a {
   text-decoration: none;
   color: #3b5998;
@@ -45,31 +45,33 @@ a:hover {
 
 html, body{height: 100%; padding: 0; margin: 0;}
 #body {
-  max-width: 400px;
-  margin: auto; position: relative; height: 100%; 
+  width: 400px;
 }
 
-
-.chat{
-  background: url(bg2.jpg) 50% 50% repeat fixed ; background-size: contain; 
-  border-radius: 0 0 4px 4px; 
-  padding: 8px;
-  overflow: auto; overflow: auto; margin-top: 30px;
+.myphoto{float: right; margin-left: 8px}
+.photo{float: left; margin-right: 8px;}
+.txt{float: right; position: relative;min-height:15px;margin-bottom: 12px; border-radius: 6px; padding: 8px; font-size: 12px; max-width: 298px;}
+.myphoto + .txt{ margin-left: 45px; background: rgba(224, 238,238,.9)}
+.photo + .txt{ margin-right: 45px; background: rgba(255,255,255,.9);}
+.txt:after{
+  height: 0; width: 0; border:4px solid transparent; content:'';
+  position: absolute; top: 8px;
 }
-img.myphoto{float: right; margin-left: 8px}
-img.photo{float: left; margin-right: 8px;}
-.txt{overflow: hidden; position: relative; margin-bottom: 12px; border-radius: 6px; padding: 8px; font-size: 12px;}
-img.myphoto + .txt{ margin-left: 45px; background: rgba(224, 238,238,.9)}
-img.photo + .txt{ margin-right: 45px; background: rgba(255,255,255,.9);}
-
+.myphoto + .txt:after{
+  border-left-color:rgba(224, 238,238,.9); right: -8px; 
+}
 #messageform{
   padding: 0; }
 #messageform input[type="text"]{
   width: 290px; height: 29px;
 }
 .nav{
-  position: fixed; top: 0; left: 0; right:0; height: 30px; background: #74476A; z-index: 1;
-  text-align: center; color: #fff;
+  position: fixed; top: 0; left: 0; right:0; height: 22px; background: #74476A; z-index: 1;
+  text-align: center; color: #fff; padding-top: 8px;
 }
 .nav a{color:#fff;}
 footer{height: 40px; background: #000; position: fixed; bottom: 0; left: 0; right: 0;}
+.message:after{content: ''; clear: both; display: block;}
+.txt span{
+    float: right;
+    line-height: 18px; width: 40px; font-size: 10px; color: #666; text-align: right;}

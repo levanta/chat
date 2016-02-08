@@ -39,18 +39,11 @@ td {
 #body {
   position: absolute;
   bottom: 10px;
-  left: 10px;
+  left: 50%; margin-left: -200px;
+  background: url(bg2.jpg) 50% 50% repeat fixed ; background-size: contain; 
+  border-radius: 0 0 4px 4px; padding: 8px;
 }
 
 #input {
-  margin-top: 0.5em;
-}
-
-#inbox .message {
-  padding-top: 0.25em;
-}
-
-#nav {
-  float: right;
-  z-index: 99;
+  margin-top: 0.5em;height: 40px; background: #000; 
 }

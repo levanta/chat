@@ -63,6 +63,16 @@ var updater = {
         var node = $(message.html);
         node.hide();
         $("#inbox").append(node);
+        var src = $('.ph1').attr('data-src');
+        $('.myphoto').html('<img src='+src+'>');
+        var date = new Date()
+
+        node.find('span').text(date.getHours()+':'+date.getMinutes())
         node.slideDown();
     }
 };
+
+$(function(){
+        var src = $('.ph1').attr('data-src');
+        $('.myphoto').html('<img src='+src+'>')
+})
