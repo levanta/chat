@@ -63,16 +63,18 @@ var updater = {
         var node = $(message.html);
         node.hide();
         $("#inbox").append(node);
-        var src = $('.ph1').attr('data-src');
-        $('.myphoto').html('<img src='+src+'>');
-        var date = new Date()
 
-        node.find('span').text(date.getHours()+':'+date.getMinutes())
+        var messageid = node.find('.message').data('messageid'),
+            userid = node.find('.message').data('userid');
+        messageid == userid ? node.find('.pic').addClass('myphoto') : node.find('.pic').addClass('photo')
+
         node.slideDown();
     }
 };
 
 $(function(){
-        var src = $('.ph1').attr('data-src');
-        $('.myphoto').html('<img src='+src+'>')
+    $('#inbox').css({minHeight:$(document).height()-100})
+    $(window).resize(function(){
+        $('#inbox').css({minHeight:$(document).height()-100})
+    });
 })
