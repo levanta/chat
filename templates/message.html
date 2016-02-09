@@ -1,9 +1,4 @@
 <div class="message" id="m{{ message["id"] }}" data-userid="{{ current_user["id"] }}" data-messageid="{{ message["user_id"] }}">
-<div class="pic
-{% if current_user["id"] == message["user_id"] %}
-myphoto
-{% else %}
-photo
-{% end %}
+<div class="pic {% if current_user["id"] == message["user_id"] %} myphoto {% else %} photo {% end %}
 " ><img src="{{ message["avatar"] }}"></div>
 <div class="txt">{% module linkify(message["body"]) %} <span>{{ message["time"] }}</span></div></div>

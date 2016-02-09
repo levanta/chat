@@ -67,7 +67,7 @@ var updater = {
             userid = node.find('.message').data('userid');
         messageid == userid ? node.find('.pic').addClass('myphoto') : node.find('.pic').addClass('photo')
 
-        $("#inbox").append(node);
+        $("#inbox").append(node); 
         node.slideDown();
     }
 };
