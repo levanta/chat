@@ -15,7 +15,7 @@
       </div>
       <div id="inbox">
         {% for message in messages %}
-          {{message["html"]}}
+          {% include "message.html" %}
         {% end %}
       </div>
       <div id="input">
