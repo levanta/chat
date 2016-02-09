@@ -62,12 +62,12 @@ var updater = {
         if (existing.length > 0) return;
         var node = $(message.html);
         node.hide();
-        $("#inbox").append(node);
 
         var messageid = node.find('.message').data('messageid'),
             userid = node.find('.message').data('userid');
         messageid == userid ? node.find('.pic').addClass('myphoto') : node.find('.pic').addClass('photo')
 
+        $("#inbox").append(node);
         node.slideDown();
     }
 };
