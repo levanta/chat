@@ -45,6 +45,12 @@ jQuery.fn.formToDict = function() {
     if (json.next) delete json.next;
     return json;
 };
+function getCookie(name) {
+    var matches = document.cookie.match(new RegExp(
+      "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+    ))
+    return matches ? decodeURIComponent(matches[1]) : undefined
+}
 
 var updater = {
     socket: null,
@@ -62,13 +68,15 @@ var updater = {
         if (existing.length > 0) return;
         var node = $(message.html);
         node.hide();
-
-        var messageid = node.find('.message').data('messageid'),
-            userid = node.find('.message').data('userid');
+        var messageid = node.attr('data-messageid'),
+            userid = getCookie('usr_id');
         messageid == userid ? node.find('.pic').addClass('myphoto') : node.find('.pic').addClass('photo')
 
         $("#inbox").append(node); 
-        node.slideDown();
+        node.slideDown(300);
+        $('html,body').height($('#body').height())
+        .animate({ scrollTop: $(document).height() }, 300);
+
     }
 };
 

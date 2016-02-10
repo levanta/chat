@@ -38,12 +38,10 @@ td {
 
 #body {
   position: absolute;
-  bottom: 10px;
-  left: 50%; margin-left: -200px;
+  left: 50%; margin-left: -200px; margin-top: 30px; margin-bottom: 13px;
   background: url(bg2.jpg) 50% 50% repeat fixed ; background-size: contain; 
-  border-radius: 0 0 4px 4px; padding: 8px;
+  border-radius: 0 0 4px 4px; padding: 8px 8px 50px;
 }
 
 #input {
-  margin-top: 0.5em;height: 40px; background: #000; 
-}
+  margin-top: 0.5em;height: 40px; background: #000; position: fixed; bottom: 17px; left: 50%;  margin-left: -192px; width: 400px;}
