@@ -74,6 +74,7 @@ html, body{height: 100%; padding: 0; margin: 0;}
 }
 .nav a{color:#fff;}
 footer{height: 40px; background: #000; position: fixed; bottom: 0; left: 0; right: 0;}
+.message{display: none}
 .message:after{content: ''; clear: both; display: block;}
 .txt span{
     float: right;

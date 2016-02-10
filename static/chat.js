@@ -82,6 +82,12 @@ var updater = {
 
 $(function(){
     $('#inbox').css({minHeight:$(document).height()-100})
+    $('.message').each(function(){
+        var messageid = $(this).attr('data-messageid'),
+            userid = getCookie('usr_id');
+        messageid == userid ? $(this).find('.pic').addClass('myphoto') : $(this).find('.pic').addClass('photo')
+        $(this).show();
+    })
     $(window).resize(function(){
         $('#inbox').css({minHeight:$(document).height()-100})
     });
