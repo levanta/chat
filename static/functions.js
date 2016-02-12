@@ -75,7 +75,7 @@ var updater = {
         $("#inbox").append(node); 
         node.slideDown(300);
         $('html,body').height($('#body').height())
-        .animate({ scrollTop: $(document).height() }, 300);
+            .animate({ scrollTop: $(document).height() }, 300);
 
     }
 };

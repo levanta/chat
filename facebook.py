@@ -33,7 +33,7 @@ define("facebook_secret", 'fe59f5b8b538d9176bf54b989e58874b', type=str)
 class Application(tornado.web.Application):
     def __init__(self):
         handlers = [
-            (r"/", MainHandler2),
+            (r"/", MainPageHandler),
             (r"/test", MainHandler),
             (r"/chatsocket", ChatSocketHandler),
             (r"/auth/login", AuthLoginHandler),
@@ -47,7 +47,7 @@ class Application(tornado.web.Application):
             xsrf_cookies=True,
             facebook_api_key=options.facebook_api_key,
             facebook_secret=options.facebook_secret,
-            ui_modules={"Post": PostModule, "Post2": PostModule2, "Post3": PostModule3},
+            ui_modules={"Post": PostModule},
             debug=True,
             autoescape=None,
         )
@@ -68,7 +68,7 @@ class MainHandler(BaseHandler, tornado.auth.FacebookGraphMixin):
     def get(self):
         self.render("stream2.html", messages=ChatSocketHandler.cache)
 
-class MainHandler2(BaseHandler):
+class MainPageHandler(BaseHandler):
     def get(self):
         self.render("stream.html")
 
@@ -105,18 +105,9 @@ class AuthLogoutHandler(BaseHandler, tornado.auth.FacebookGraphMixin):
         self.clear_cookie("usr_id")
         self.redirect(self.get_argument("next", "/"))
 
-
 class PostModule(tornado.web.UIModule):
-    def render(self, post):
-        return self.render_string("modules/post.html", post=post)
-
-class PostModule2(tornado.web.UIModule):
     def render(self):
-        return self.render_string("modules/post2.html")
-
-class PostModule3(tornado.web.UIModule):
-    def render(self):
-        return self.render_string("modules/post3.html")
+        return self.render_string("modules/post.html")
 
 def main():
     tornado.options.parse_command_line()
