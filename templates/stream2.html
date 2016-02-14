@@ -21,7 +21,7 @@
     </div>
     <div id="input">
         <form action="/a/message/new" method="post" id="messageform">
-            <input type="text" name="body" id="message" placeholder="___________________________________________">
+            <input type="text" name="body" id="message" placeholder="___________________________________________" data-icon="{{ escape(current_user["picture"]["data"]["url"]) }}" data-name="{{ escape(current_user["name"]) }}">
             <button type="submit" value="{{ _("Post") }}"></button>
             <input type="hidden" name="next" value="{{ request.path }}">
             {% module xsrf_form_html() %}

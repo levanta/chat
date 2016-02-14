@@ -11,6 +11,28 @@
 // WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 // License for the specific language governing permissions and limitations
 // under the License.
+var Notify = {},
+    iteration = 0;
+
+function sendNoficiation(message, ico, name, tag) {
+    Notification.requestPermission();
+    var theme = name;
+    if (tag != "") var tag = tag;
+    if (message != "") var body = message;
+    if (ico != "") var icon = ico;
+
+    if(tag, body, icon) {
+        var params = {
+            body : (body) ? body : "",
+            tag : (tag) ? tag : "",
+            icon : (icon) ? icon : ""
+        };
+    };
+
+    Notify["notification" + iteration] = (params) ? new Notification(theme, params) : new Notification(theme);
+    iteration++;
+    delete tag, body, icon, params;
+};
 
 $(document).ready(function() {
     if (!window.console) window.console = {};
@@ -34,6 +56,7 @@ function newMessage(form) {
     var message = form.formToDict();
     updater.socket.send(JSON.stringify(message));
     form.find("input[type=text]").val("").select();
+        sendNoficiation('AASAS', form.find("input[type=text]").data('icon'), form.find("input[type=text]").data('name'), 1);
 }
 
 jQuery.fn.formToDict = function() {
@@ -167,3 +190,4 @@ $(function(){
         }
     })
 })
+
