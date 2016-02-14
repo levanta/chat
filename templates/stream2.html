@@ -6,11 +6,12 @@
     <link rel="stylesheet" href="{{ static_url("styles.css") }}">
 </head>
 <body>
-    <div id="body">
+    <div id="body" style="background-image:url('{{ bg }}')">
         <div class="nav">
-            <b>{{ escape(current_user["name"]) }}</b> -
-            <a href="/auth/logout">{{ _("Sign out") }}</a> | 
-            <a href="/">{{ _("Refresh stream") }}</a>
+            Tornado Chat Demo
+            <div class="menu">
+                <span></span>
+            </div>
         </div>
         <div id="inbox">
             {% for message in messages %}
@@ -20,13 +21,27 @@
     </div>
     <div id="input">
         <form action="/a/message/new" method="post" id="messageform">
-            <input name="body" id="message">
-            <input type="submit" value="{{ _("Post") }}">
+            <input type="text" name="body" id="message" placeholder="___________________________________________">
+            <button type="submit" value="{{ _("Post") }}"></button>
             <input type="hidden" name="next" value="{{ request.path }}">
             {% module xsrf_form_html() %}
         </form>
     </div>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3/jquery.min.js"></script>
+    <div class="overlay"></div>
+    <div class="userInfo">
+        <div class="head">
+            <img src="{{ current_user["picture"]["data"]["url"] }}" alt="">
+            {{ escape(current_user["name"]) }}
+        </div>
+        <div class="info">
+            <a href="/auth/logout">{{ _("Sign out") }}</a> 
+            <a href="/">{{ _("Refresh stream") }}</a>
+            <a href="#" class="getbg">Change background</a>
+            <div class="bg"></div>
+            <a href="#">Settings</a>
+        </div>
+    </div>
+    <script src="{{ static_url("jquery.js") }}"></script>
     <script src="{{ static_url("functions.js") }}"></script>
 </body>
 </html>

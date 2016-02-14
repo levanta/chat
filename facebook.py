@@ -21,9 +21,11 @@ import tornado.httpserver
 import tornado.ioloop
 import tornado.options
 import tornado.websocket
+import urllib
 
 from tornado.options import define, options
 from chatsockethandler import ChatSocketHandler
+from getbg import BgHandler
 
 define("port", default=8888, help="run on the given port", type=int)
 define("facebook_api_key", "549740061875624", type=str)
@@ -34,7 +36,8 @@ class Application(tornado.web.Application):
     def __init__(self):
         handlers = [
             (r"/", MainPageHandler),
-            (r"/test", MainHandler),
+            (r"/chat", MainHandler),
+            (r"/getbg", BgHandler),
             (r"/chatsocket", ChatSocketHandler),
             (r"/auth/login", AuthLoginHandler),
             (r"/auth/logout", AuthLogoutHandler),
@@ -66,11 +69,15 @@ class BaseHandler(tornado.web.RequestHandler):
 class MainHandler(BaseHandler, tornado.auth.FacebookGraphMixin):
     @tornado.web.authenticated
     def get(self):
-        self.render("stream2.html", messages=ChatSocketHandler.cache)
+        bg = urllib.unquote(self.get_cookie("bg")).decode('utf8') if self.get_cookie("bg") else '/static/bg/bg2.jpg' 
+        self.render("stream2.html", messages=ChatSocketHandler.cache, bg=bg)
+
 
 class MainPageHandler(BaseHandler):
     def get(self):
         self.render("stream.html")
+
+
 
 
 class AuthLoginHandler(BaseHandler, tornado.auth.FacebookGraphMixin):
