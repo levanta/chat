@@ -1,9 +1,10 @@
 import os 
 import tornado.web
+import sys
 
 class BgHandler(tornado.web.RequestHandler):
     def get(self):
-		directory = '/var/www/tornado-master/demos/facebook/static/bg'
+		directory = sys.path[0]+'/static/bg'
 		files = os.listdir(directory)
 		bgobj = []
 		for i in files:
