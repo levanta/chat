@@ -48,6 +48,7 @@ class ChatSocketHandler(tornado.websocket.WebSocketHandler):
             "id": str(uuid.uuid4()),
             "body": parsed["body"],
             "avatar": user["picture"]["data"]["url"],
+            "name": user["name"],
             "time" : time,
             "user_id" : user_id
             }

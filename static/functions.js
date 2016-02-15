@@ -1,16 +1,25 @@
-// Copyright 2009 FriendFeed
-//
-// Licensed under the Apache License, Version 2.0 (the "License"); you may
-// not use this file except in compliance with the License. You may obtain
-// a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
-// WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
-// License for the specific language governing permissions and limitations
-// under the License.
+var Notify = {},
+    iteration = 0;
+
+function sendNoficiation(name, message, tag, ico) {
+    Notification.requestPermission();
+    var theme = name;
+    if (tag != "") var tag = tag;
+    if (message != "") var body = message;
+    if (ico != "") var icon = ico;
+
+    if(tag, body, icon) {
+        var params = {
+            body : (body) ? body : "",
+            tag : (tag) ? tag : "",
+            icon : (icon) ? icon : ""
+        };
+    };
+    Notify["notification" + iteration] = (params) ? new Notification(theme, params) : new Notification(theme);
+    setTimeout(Notify["notification" + iteration].close.bind(Notify["notification" + iteration]), 2000);
+    iteration++;
+    delete tag, body, icon, params;
+};
 
 $(document).ready(function() {
     if (!window.console) window.console = {};
@@ -97,13 +106,20 @@ var updater = {
         var node = $(message.html);
         node.hide();
         var messageid = node.attr('data-messageid'),
-            userid = getCookie('usr_id');
+            userid = getCookie('usr_id'),
+            username = node.attr('data-name');
+
         messageid == userid ? node.find('.pic').addClass('myphoto') : node.find('.pic').addClass('photo')
 
         $("#inbox").append(node); 
+
+
         node.slideDown(300);
         $('html,body').height($('#body').height())
             .animate({ scrollTop: $(document).height() }, 300);
+
+        if(messageid != userid)   
+            sendNoficiation(username, node.find(".txt").text(), messageid, node.find('.pic img').attr('src'));
 
     }
 };
@@ -167,3 +183,4 @@ $(function(){
         }
     })
 })
+
