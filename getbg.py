@@ -1,10 +1,9 @@
 import os 
 import tornado.web
-import sys
 
 class BgHandler(tornado.web.RequestHandler):
     def get(self):
-		directory = sys.path[0]+'/static/bg'
+		directory = os.path.join(os.path.dirname(__file__), "static/bg")
 		files = os.listdir(directory)
 		bgobj = []
 		for i in files:
