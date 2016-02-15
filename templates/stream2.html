@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{{ static_url("styles.css") }}">
 </head>
 <body>
-    <div id="body">
+    <div id="body" {% if bg %}style="background-image:url('{{ bg }}')"{% end %}>
         <div class="nav">
             Tornado Chat Demo
             <div class="menu">
